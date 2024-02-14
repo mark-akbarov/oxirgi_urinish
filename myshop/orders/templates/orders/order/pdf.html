@@ -1,0 +1,47 @@
+{% load humanize %}
+<html>
+<body>
+  <h1>AD & AN</h1>
+  <p>
+    Buyurtma Raqami {{ order.id }} |
+      {{ order.created|date:"M d, Y" }}
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>{{ order.first_name }}</th>
+        <th>{{ order.address }}</th>
+        <th>{{ order.phone }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th>Mahsulot</th>
+        <th>Narxi</th>
+        <th>Soni</th>
+        <th>Izohi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+        <tr class="row{% cycle "1" "2" %}">
+          <td>{{ item.product.name }}</td>
+          <td class="num">{{ item.price }}</td>
+          <td class="num">{{ item.quantity }}</td>
+          <td class="num">{{ item.additional_notes }}</td>
+        </tr>
+      {% endfor %}
+      <tr class="total">
+        <td colspan="3">Total</td>
+        <td class="num">{{ order.get_total_cost|intcomma }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <span class="paid">
+      AD & AN
+  </span>
+</body>
+</html>

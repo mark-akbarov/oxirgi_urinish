@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+{% block title %}
+ Tugatish
+{% endblock %}
+{% block content %}
+ <h1>Tugatish</h1>
+ <div class="order-info">
+ <h3>Ro'yxatingiz</h3>
+ <ul>
+ {% for item in cart %}
+ <li>
+ {{ item.quantity }}x {{ item.product.name }}
+ <span>${{ item.total_price }}</span>
+ </li>
+ {% endfor %}
+ </ul>
+ <p>Jami: {{ cart.get_total_price }}</p>
+ </div>
+ <form method="post" class="order-form">
+ {{ form.as_p }}
+ <p><input type="submit" value="Tasdiqlash"></p>
+ {% csrf_token %}
+ </form>
+{% endblock %}

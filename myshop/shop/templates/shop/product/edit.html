@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}
+{% block title %}
+    Tahrirlash
+{% endblock %}
+{% block content %}
+    <h2>Mahsulotni Tahrirlash</h2>
+    <form method="post" action="{% url 'shop:product_edit' id=product.id slug=product.slug %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Tasdiqlash">
+</form>
+{% endblock %}
