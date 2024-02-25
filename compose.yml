@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+      build: 
+        context: ./src
+        dockerfile: Dockerfile
+      command: gunicorn myshop.wsgi:application --bind 0.0.0.0:8000
+      volumes:
+        - static_volume:/home/app/web/static
+        - media_volume:/home/app/web/media
+      ports:
+        - 8000:8000
+      depends_on:
+        - db
+  db:
+    image: postgres:12-bookworm
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=sklad_db
+      - POSTGRES_USER=sklad_user
+      - POSTGRES_PASSWORD=123456
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    ports:
+      - 1337:8000
+    depends_on:
+      - web
+
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

@@ -20,7 +20,7 @@ ENV/
 # Static files
 /staticfiles/
 media/
-
+static/
 # Database
 *.db
 *.sqlite3
