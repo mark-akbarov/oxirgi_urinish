@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   web:
-      build: 
+      build:
         context: ./src
         dockerfile: Dockerfile
       command: gunicorn myshop.wsgi:application --bind 0.0.0.0:8000
       volumes:
-        - static_volume:/home/app/web/static
-        - media_volume:/home/app/web/media
-      ports:
-        - 8000:8000
+        - static_volume:/home/app/web/static:rw
+        - media_volume:/home/app/web/media:rw
+      expose:
+        - 8000
       depends_on:
         - db
   db:
@@ -24,10 +24,10 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - static_volume:/home/app/web/static:rw
+      - media_volume:/home/app/web/media:rw
     ports:
-      - 1337:8000
+      - 80:80
     depends_on:
       - web
 
